@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,11 +30,11 @@ public class DatasetIris {
 		// Executa o método knn para classificar as iris
 		List<Integer> classificacao = knn(listaTreinamento, listaTeste, k);
 		
+		FileWriter fw = null;
 		try {
-			FileWriter fw = new FileWriter(new File("resultado.txt"));
+			fw = new FileWriter(new File("resultado.txt"));
 			
-			//ler dados de teste
-			int acertos = 0;
+			double acertos = 0.0;
 			int cont = 0;
 			
 			List<Integer> rotulosTeste = lerRotulosTeste();
@@ -46,23 +49,24 @@ public class DatasetIris {
 				cont++;
 			}
 			
-			// FAZER O CÁLCULO PARA PERMANECER COM AS CASAS DECIMAIS
-			int restoDaDivisao = 100%classificacao.size();
+			// Valor da porcentagem de um rotulo acertado
+			double porcentagemPorAcerto = 100.0 / (double) classificacao.size();
 			
-			//dividir 100 pelo número total de labels
-			//pegar a quantidade de labels acertadas e multiplicar pelo valor acima
-			Integer porcentagemDeAcertos = (acertos * (100/classificacao.size()))+restoDaDivisao;
+			// Calcula o valor da porcentagem de acertos do algoritmo
+			Double porcentagemDeAcertos = porcentagemPorAcerto * acertos;
 			
+			// Formata e grava o valor da porcentagem de acertos do algoritmo
+			fw.write(new DecimalFormat("0.##").format(porcentagemDeAcertos).toString());
 			
-			fw.write(porcentagemDeAcertos.toString());
-			
-			fw.flush();
 		} catch (IOException ex) {
 			ex.printStackTrace();
+		} finally {
+			try {
+				fw.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
-		// método para comparar a classificação feita com os teste
-
 		
 	}
 	
@@ -82,29 +86,30 @@ public class DatasetIris {
 			Collections.sort(pontos); 
 
 			// Armazena a quantidade de ocorrências para os labels dos K pontos mais próximos
-			Map<Integer, Integer> occurenceCount = new HashMap<Integer, Integer>(); // chave = label, valor = quantidade de ocorrências para a label
+			Map<Integer, Integer> contadorDeOcorrencias = new HashMap<Integer, Integer>(); // chave = label, valor = quantidade de ocorrências do label
 			
 			// Varre os k pontos mais próximos
 			for (int i = 0; i < k; i++) { 
 				Integer label = pontos.get(i).getLabel();
 				
 				// Se o label já estiver contido no map
-				if (occurenceCount.containsKey(label)) { 
-					occurenceCount.put(label, occurenceCount.get(label) + 1); // Incrementa a quantidade de ocorrências do label
+				if (contadorDeOcorrencias.containsKey(label)) { 
+					contadorDeOcorrencias.put(label, contadorDeOcorrencias.get(label) + 1); // Incrementa a quantidade de ocorrências do label
 				} else {
-					occurenceCount.put(label, 1); // Adiciona um novo label no map
+					contadorDeOcorrencias.put(label, 1); // Adiciona um novo label no map
 				}
 			}
 
 			// Obtém a ocorrência mais frequente
 			int labelMaisFrequente = -1;
 			Integer maiorNumeroOcorrencias = 0;
-			// representa o map como um conjunto e faz a iteração sobre ele
-			for (Entry<Integer, Integer> entry : occurenceCount.entrySet()) {
+			
+			// Representa o map como um conjunto e faz a iteração sobre ele
+			for (Entry<Integer, Integer> ocorrencias : contadorDeOcorrencias.entrySet()) {
 				// Se o número de ocorrências do label for maior do que o maior número de ocorrências atual  
-				if (maiorNumeroOcorrencias < entry.getValue()) { 
-					maiorNumeroOcorrencias = entry.getValue(); // Atualiza o número de ocorrências
-					labelMaisFrequente = entry.getKey(); // Atualiza o label mais frequente
+				if (maiorNumeroOcorrencias < ocorrencias.getValue()) { 
+					maiorNumeroOcorrencias = ocorrencias.getValue(); // Atualiza o número de ocorrências
+					labelMaisFrequente = ocorrencias.getKey(); // Atualiza o label mais frequente
 				}
 			}
 			
