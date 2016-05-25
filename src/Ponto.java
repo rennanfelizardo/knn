@@ -1,20 +1,21 @@
 
 public class Ponto  implements Comparable<Ponto>{
 	
-	private int label;
+	private Iris irisVizinha;
+	//private int label;
 	private double distancia;
 	
-	public Ponto(int label, double distancia) {
-		this.label = label;
+	public Ponto(Iris irisVizinha, double distancia) {
+		this.irisVizinha = irisVizinha;
 		this.distancia = distancia;
 	}
 
-	public int getLabel() {
-		return label;
+	public Iris getIrisVizinha() {
+		return irisVizinha;
 	}
 
-	public void setLabel(int label) {
-		this.label = label;
+	public void setIrisVizinha(Iris irisVizinha) {
+		this.irisVizinha = irisVizinha;
 	}
 
 	public double getDistancia() {
