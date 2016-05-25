@@ -1,12 +1,11 @@
 
 public class Iris {
 
-	double sepallength;
-	double sepalwidth;
-	double petallength;
-	double petalwidth;
-	int label;
-
+	private double sepallength;
+	private double sepalwidth;
+	private double petallength;
+	private double petalwidth;
+	private int label;
 
 	public Iris (double sepallength, double sepalwidth, double petallength, double petalwidth, int label){
 		this.sepallength = sepallength;
@@ -22,16 +21,51 @@ public class Iris {
 		this.petallength = petallength;
 		this.petalwidth = petalwidth;
 	}
-
-	//cálculo da distância euclidiana
-	public double distancia(Iris outra){
-		return Math.sqrt(Math.pow(this.sepallength - outra.sepallength, 2) + Math.pow(this.sepalwidth - outra.sepalwidth, 2)
-						+ Math.pow(this.petallength - outra.petallength, 2) + Math.pow(this.petalwidth - outra.sepalwidth, 2));
-	}
 	
+	public double getSepallength() {
+		return sepallength;
+	}
+
+	public void setSepallength(double sepallength) {
+		this.sepallength = sepallength;
+	}
+
+	public double getSepalwidth() {
+		return sepalwidth;
+	}
+
+	public void setSepalwidth(double sepalwidth) {
+		this.sepalwidth = sepalwidth;
+	}
+
+	public double getPetallength() {
+		return petallength;
+	}
+
+	public void setPetallength(double petallength) {
+		this.petallength = petallength;
+	}
+
+	public double getPetalwidth() {
+		return petalwidth;
+	}
+
+	public void setPetalwidth(double petalwidth) {
+		this.petalwidth = petalwidth;
+	}
+
+	public int getLabel() {
+		return label;
+	}
+
+	public void setLabel(int label) {
+		this.label = label;
+	}
+
 	@Override
 	public String toString(){
 		return "Iris - sepallenght: "+sepallength+ ", spealwidht: "+sepalwidth+ ", petallenght: "+petallength +
 				", petalwidth: "+petalwidth+ ", label:"+label;
 	}
+
 }
