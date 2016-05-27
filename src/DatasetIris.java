@@ -18,34 +18,34 @@ public class DatasetIris {
 
 	public static void main(String[] args) {
 		
-		// Lista de iris já rotuladas e que serão utilizadas para o treinamento 
-		List<Iris> listaTreinamento = carregarIris("arquivos/treinamento.csv");
+		// Lista de flores já rotuladas e que serão utilizadas para o treinamento 
+		List<Flor> listaTreinamento = carregarFlores("arquivos/treinamento.csv");
 		
-		// Lista de iris que precisam ser rotuladas
-		List<Iris> irisNaoRotuladas = carregarIris("arquivos/teste.csv"); 
+		// Lista de flores que precisam ser rotuladas
+		List<Flor> floresNaoRotuladas = carregarFlores("arquivos/teste.csv"); 
 		
 		int k = Integer.parseInt(JOptionPane.showInputDialog(null, "Informe o valor de K"));
 		
-		// Executa o knn para classificar as iris não rotuladas
-		List<Integer> classificacao = knn(listaTreinamento, irisNaoRotuladas, k);
+		// Executa o knn para classificar as flores não rotuladas
+		List<Integer> classificacao = knn(listaTreinamento, floresNaoRotuladas, k);
 		
 		gravarResultado(classificacao, "resultado.txt");
 		
 	}
 	
 	/**
-	 * Realiza a classificação das iris contidas no arquivo de teste a partir dos dados da lsita de treinamento
+	 * Realiza a classificação das flores contidas no arquivo de teste a partir dos dados da lista de treinamento
 	 */
-	public static List<Integer> knn(List<Iris> listaTreinamento, List<Iris> irisNaoRotuladas, int k){
+	public static List<Integer> knn(List<Flor> listaTreinamento, List<Flor> floresNaoRotuladas, int k){
 		List<Integer> classificacao = new ArrayList<Integer>();
 		
-		// Cada iris da lista de teste deve ser classificada
-		for (Iris irisNaoRotulada : irisNaoRotuladas) {
+		// Cada flor da lista de teste deve ser classificada
+		for (Flor florNaoRotulada : floresNaoRotuladas) {
 			
 			List<Ponto> pontos = new ArrayList<Ponto>();
 			
-			for (Iris iris : listaTreinamento) { 
-				pontos.add(new Ponto(iris, calcularDistancia(irisNaoRotulada, iris)));
+			for (Flor flor : listaTreinamento) { 
+				pontos.add(new Ponto(flor, calcularDistancia(florNaoRotulada, flor)));
 			}
 			
 			// Ordena a lista de pontos a partir da menor distância para a maior
@@ -56,7 +56,7 @@ public class DatasetIris {
 			
 			// Varre os k pontos mais próximos
 			for (int i = 0; i < k; i++) { 
-				Integer label = pontos.get(i).getIrisVizinha().getLabel();
+				Integer label = pontos.get(i).getFlorVizinha().getLabel();
 				
 				// Se o label já estiver contido no map
 				if (contadorDeOcorrencias.containsKey(label)) { 
@@ -75,8 +75,10 @@ public class DatasetIris {
 			for (Entry<Integer, Integer> ocorrencias : contadorDeOcorrencias.entrySet()) {
 				// Se o número de ocorrências do label for maior do que o maior número de ocorrências atual  
 				if (maiorNumeroOcorrencias < ocorrencias.getValue()) { 
-					maiorNumeroOcorrencias = ocorrencias.getValue(); // Atualiza o número de ocorrências
-					labelMaisFrequente = ocorrencias.getKey(); // Atualiza o label mais frequente
+					// Atualiza o número de ocorrências
+					maiorNumeroOcorrencias = ocorrencias.getValue(); 
+					// Atualiza o label mais frequente
+					labelMaisFrequente = ocorrencias.getKey(); 
 				}
 			}
 			
@@ -96,7 +98,7 @@ public class DatasetIris {
 	 * Math.pow(double, double) : retorna o valor do primeiro argumento elevado ao segundo
 	 * 
 	 */
-	public static double calcularDistancia(Iris irisA, Iris irisB){
+	public static double calcularDistancia(Flor irisA, Flor irisB){
 		return Math.sqrt(Math.pow(irisA.getSepallength() - irisB.getSepallength(), 2) + Math.pow(irisA.getSepalwidth() - irisB.getSepalwidth(), 2)
 						+ Math.pow(irisA.getPetallength() - irisB.getPetallength() , 2) + Math.pow(irisA.getPetalwidth() - irisB.getPetalwidth(), 2));
 	}
@@ -104,9 +106,9 @@ public class DatasetIris {
 	/**
 	 * Cria iris de acordo com os dados contidos em um arquivo
 	 */
-	public static List<Iris> carregarIris(String nomeArquivo){
+	public static List<Flor> carregarFlores(String nomeArquivo){
 		
-		List<Iris> iris = new ArrayList<Iris>();
+		List<Flor> iris = new ArrayList<Flor>();
 		
 		Scanner leitor = null;
 		try {
@@ -134,15 +136,15 @@ public class DatasetIris {
 	/**
 	 * Cria uma iris de acordo com os dados contidos em uma linha
 	 */
-	public static Iris criarIris(String linha) {
+	public static Flor criarIris(String linha) {
 		Scanner leitor = null;
-		Iris iris = null;
+		Flor iris = null;
 		
 		try {
 			leitor = new Scanner(linha).useDelimiter("\\s*,\\s*");
 			
 			// Cria a iris com os dados contido no arquivo
-			iris = new Iris(Double.parseDouble(leitor.next()), Double.parseDouble(leitor.next()), 
+			iris = new Flor(Double.parseDouble(leitor.next()), Double.parseDouble(leitor.next()), 
 											Double.parseDouble(leitor.next()), Double.parseDouble(leitor.next()));
 
 			// Verifica se a iris possui um rótulo. Se possuir, a iris é rotulada

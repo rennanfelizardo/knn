@@ -1,21 +1,21 @@
 
 public class Ponto  implements Comparable<Ponto>{
 	
-	private Iris irisVizinha;
+	private Flor FlorVizinha;
 	//private int label;
 	private double distancia;
 	
-	public Ponto(Iris irisVizinha, double distancia) {
-		this.irisVizinha = irisVizinha;
+	public Ponto(Flor irisVizinha, double distancia) {
+		this.FlorVizinha = irisVizinha;
 		this.distancia = distancia;
 	}
 
-	public Iris getIrisVizinha() {
-		return irisVizinha;
+	public Flor getFlorVizinha() {
+		return FlorVizinha;
 	}
 
-	public void setIrisVizinha(Iris irisVizinha) {
-		this.irisVizinha = irisVizinha;
+	public void setIrisVizinha(Flor irisVizinha) {
+		this.FlorVizinha = irisVizinha;
 	}
 
 	public double getDistancia() {

@@ -1,5 +1,5 @@
 
-public class Iris {
+public class Flor {
 
 	private double sepallength;
 	private double sepalwidth;
@@ -7,7 +7,7 @@ public class Iris {
 	private double petalwidth;
 	private int label;
 
-	public Iris (double sepallength, double sepalwidth, double petallength, double petalwidth, int label){
+	public Flor (double sepallength, double sepalwidth, double petallength, double petalwidth, int label){
 		this.sepallength = sepallength;
 		this.sepalwidth = sepalwidth;
 		this.petallength = petallength;
@@ -15,7 +15,7 @@ public class Iris {
 		this.label = label;
 	}
 
-	public Iris(double sepallength, double sepalwidth, double petallength, double petalwidth) {
+	public Flor(double sepallength, double sepalwidth, double petallength, double petalwidth) {
 		this.sepallength = sepallength;
 		this.sepalwidth = sepalwidth;
 		this.petallength = petallength;
