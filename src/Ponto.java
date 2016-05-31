@@ -2,7 +2,6 @@
 public class Ponto  implements Comparable<Ponto>{
 	
 	private Flor florVizinha;
-	//private int label;
 	private double distancia;
 	
 	public Ponto(Flor florVizinha, double distancia) {

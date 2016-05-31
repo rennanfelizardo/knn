@@ -104,11 +104,11 @@ public class DatasetIris {
 	}
 	
 	/**
-	 * Cria iris de acordo com os dados contidos em um arquivo
+	 * Cria flores de acordo com os dados contidos em um arquivo
 	 */
 	public static List<Flor> carregarFlores(String nomeArquivo){
 		
-		List<Flor> iris = new ArrayList<Flor>();
+		List<Flor> flores = new ArrayList<Flor>();
 		
 		Scanner leitor = null;
 		try {
@@ -119,8 +119,8 @@ public class DatasetIris {
 			
 			while (leitor.hasNextLine()) {
 				
-				// Adiciona uma nova iris criada a partir dos dados contidos na linha atual do arquivo
-				iris.add(criarIris(leitor.nextLine()));
+				// Adiciona uma nova flor criada a partir dos dados contidos na linha atual do arquivo
+				flores.add(criarFlor(leitor.nextLine()));
 				
 			}
 		} catch(Exception e) {
@@ -129,27 +129,27 @@ public class DatasetIris {
 			leitor.close();
 		}
 		
-		return iris;
+		return flores;
 
 	}
 	
 	/**
-	 * Cria uma iris de acordo com os dados contidos em uma linha
+	 * Cria uma flor de acordo com os dados contidos em uma linha
 	 */
-	public static Flor criarIris(String linha) {
+	public static Flor criarFlor(String linha) {
 		Scanner leitor = null;
-		Flor iris = null;
+		Flor flor = null;
 		
 		try {
 			leitor = new Scanner(linha).useDelimiter("\\s*,\\s*");
 			
-			// Cria a iris com os dados contido no arquivo
-			iris = new Flor(Double.parseDouble(leitor.next()), Double.parseDouble(leitor.next()), 
+			// Cria a flor com os dados contido no arquivo
+			flor = new Flor(Double.parseDouble(leitor.next()), Double.parseDouble(leitor.next()), 
 											Double.parseDouble(leitor.next()), Double.parseDouble(leitor.next()));
 
-			// Verifica se a iris possui um rótulo. Se possuir, a iris é rotulada
+			// Verifica se existe um rótulo. Se existir, a flor é rotulada
 			if (leitor.hasNextInt()) {
-				iris.setLabel(Integer.parseInt(leitor.next()));
+				flor.setLabel(Integer.parseInt(leitor.next()));
 			}
 
 		} catch (Exception e) {
@@ -158,7 +158,7 @@ public class DatasetIris {
 			leitor.close();
 		}
 
-		return iris;
+		return flor;
 	}
 	
 	/**
@@ -186,7 +186,7 @@ public class DatasetIris {
 				cont++;
 			}
 			
-			// Valor da porcentagem de um rotulo acertado
+			// Valor da porcentagem de um rótulo acertado
 			double porcentagemPorAcerto = 100.0 / (double) classificacao.size();
 			
 			// Calcula o valor da porcentagem de acertos do algoritmo
