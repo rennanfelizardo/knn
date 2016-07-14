@@ -71,7 +71,7 @@ public class DatasetIris {
 			int labelMaisFrequente = -1;
 			Integer maiorNumeroOcorrencias = 0;
 			
-			// Representa o map como um conjunto e faz a iteração sobre ele
+			// Representa o map como um Interator e faz a iteração sobre ele
 			for (Entry<Integer, Integer> ocorrencias : contadorDeOcorrencias.entrySet()) {
 				// Se o número de ocorrências do label for maior do que o maior número de ocorrências atual  
 				if (maiorNumeroOcorrencias < ocorrencias.getValue()) { 
@@ -104,7 +104,7 @@ public class DatasetIris {
 	}
 	
 	/**
-	 * Cria flores de acordo com os dados contidos em um arquivo
+	 * Cria flores de acordo com os dados carregados de um arquivo
 	 */
 	public static List<Flor> carregarFlores(String nomeArquivo){
 		
